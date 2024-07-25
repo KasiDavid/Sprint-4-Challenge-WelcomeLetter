@@ -7,4 +7,23 @@ database Datasource
 participant FormLetterService
 participant FileManager
 
+App -> EmployeeService : sendFormToEmployeeWithId
+EmployeeService -> EmployeeService : getEmployeeById
+EmployeeService -> EmployeeRepository : findEmployeeById
+EmployeeRepository -> Datasource
+
+alt
+Datasource --> EmployeeRepository : null
+EmployeeRepository --> EmployeeService : RuntimeException("No employee found with id: ")
+EmployeeService --> App : 404 Status
+end
+
+Datasource --> EmployeeRepository : Optional<Employee>
+EmployeeRepository --> EmployeeService : Employee
+EmployeeService -> FormLetterService : generateWelcomeLetter
+FormLetterService -> FileManager : writeTextToFile
+FormLetterService -> FileManager : getTextFromFile
+FileManager --> FormLetterService : String
+FormLetterService --> App : ResponseEntity<String>
+
 @enduml

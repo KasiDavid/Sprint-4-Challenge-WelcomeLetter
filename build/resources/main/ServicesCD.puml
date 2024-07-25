@@ -1,0 +1,37 @@
+@startuml
+
+class FileManager {
+    + getTextFromFile(filename : String) : String
+    + writeTextToFile(outFileName : String, text : String)
+}
+
+class FormLetterService {
+    - fileManager : FileManager
+
+    + generateWelcomeLetter(employee : Employee)
+}
+
+class EmployeeService {
+    - formLetterService : FormLetterService
+    - employeeRepository : EmployeeRepository
+
+    + getEmployeeById(id : int) : Employee
+    + sendFormToEmployeeWithId(id : int)
+}
+
+class EmployeeRepository {
+    - datasource : Datasource
+    + findEmployeeById(id : int) : Optional<Employee>
+}
+
+class Datasource {
+    + companies : List<Company>
+    + employees : List<Employee>
+}
+
+FileManager -> FormLetterService
+FormLetterService --> EmployeeService
+EmployeeService -> EmployeeRepository
+EmployeeRepository -> Datasource
+
+@enduml
