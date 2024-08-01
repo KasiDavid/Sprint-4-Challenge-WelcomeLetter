@@ -5,13 +5,13 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class FileManager {
-    private static final int BUFFER_SIZE = 256;
-    File inFile;
-    File outFile;
-    FileInputStream inStream;
-    FileOutputStream outStream;
-    byte[] buffer = new byte[BUFFER_SIZE];
-    int bytesRead;
+//    private static final int BUFFER_SIZE = 256;
+//    File inFile;
+//    File outFile;
+//    FileInputStream inStream;
+//    FileOutputStream outStream;
+//    byte[] buffer = new byte[BUFFER_SIZE];
+//    int bytesRead;
     public FileManager() {
     }
 
@@ -38,7 +38,22 @@ public class FileManager {
         return returnString;
     }
 
-//    public String getTextFromFile(String filename) {
+    public void writeTextToFile(String outFileName, String text) throws FileNotFoundException {
+        try {
+            FileWriter fileWriter = new FileWriter("src/resources/out/" + outFileName + ".txt");
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            bufferedWriter.write(text);
+
+            bufferedWriter.close();
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File not found");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //    public String getTextFromFile(String filename) {
 //        inFile = new File("src/resources/" +filename +".txt");
 //        String returnString = "";
 //
@@ -74,19 +89,4 @@ public class FileManager {
 //            System.err.println(e);
 //        }
 //    }
-    public void writeTextToFile(String outFileName, String text) throws FileNotFoundException {
-        try {
-            FileWriter fileWriter = new FileWriter("src/resources/out/" + outFileName + ".txt");
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-            bufferedWriter.write(text);
-
-            bufferedWriter.close();
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File not found");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

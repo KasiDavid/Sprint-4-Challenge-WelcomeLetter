@@ -13,7 +13,6 @@ public class FormLetterService {
         String template = fileManager.getTextFromFile("LetterTemplate");
 
         //TODO: Replace []ed text with correct info
-        String companyStartTime = "9am";
         String replaced1 = template.replace("[company name]", employee.getCompany().getCompanyname());
         String replaced2 = replaced1.replace("[fullname]",employee.getFirstname() +" "+ employee.getLastname());
         String replaced3 = replaced2.replace("[startdate]", employee.getStartdate().toString());
